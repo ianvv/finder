@@ -1,0 +1,41 @@
+.supportButton {
+  background-color: black;
+  background-size: 200% auto;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 30px;
+  border: none;
+  white-space: nowrap;
+  display: inline-block;
+  text-align: center;
+  border-radius: 25px;
+  cursor: pointer;
+  transition-duration: 3s;
+  position: relative;
+
+  &:hover {
+    background-image: linear-gradient(45deg, #5b5aff, #89db33);
+    background-position: right center;
+    animation: buttonGradient 3s ease-in-out infinite;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .supportButton {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+}
+
+@keyframes buttonGradient {
+  0% {
+    background-position: left center;
+  }
+  50% {
+    background-position: top center;
+  }
+  100% {
+    background-position: left bottom;
+  }
+}
