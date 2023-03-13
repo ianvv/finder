@@ -1,18 +1,28 @@
 import React from "react";
+import {Link, useLocation} from "react-router-dom";
+import {useAppDispatch} from "../../redux/store";
+import {setSearchValue} from "../../redux/slices/searchTrackSlice";
+import Search from "../Search/Search";
 import s from "./navbar.module.scss";
 import logo from "../../assets/img/logo.svg";
-import { Link } from "react-router-dom";
-import Search from "../Search/Search";
 
 const Navbar = () => {
-  return (
-    <nav className={s.navbar}>
-      <Link to={""}>
-        <img src={logo} alt="" className={s.navbarLogo} />
-      </Link>
-      <Search />
-    </nav>
-  );
+
+    const dispatch = useAppDispatch()
+    const location = useLocation()
+
+    const onClickHandler = () => {
+        location.pathname !== '/' && dispatch(setSearchValue(''))
+    }
+
+    return (
+        <nav className={s.navbar}>
+            <Link to={""} onClick={onClickHandler}>
+                <img src={logo} alt="" className={s.navbarLogo}/>
+            </Link>
+            <Search/>
+        </nav>
+    );
 };
 
 export default Navbar;

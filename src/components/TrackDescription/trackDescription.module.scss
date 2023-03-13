@@ -26,6 +26,10 @@
       align-items: center;
       font-size: 18px;
       margin-bottom: 5px;
+
+      span {
+        padding-left: 5px;
+      }
     }
 
     .trackAlbum {
@@ -41,7 +45,8 @@
 
     .genre {
       span {
-        font-weight: 600;
+        font-weight: 500;
+        padding-left: 5px;
       }
     }
 

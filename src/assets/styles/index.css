@@ -9,6 +9,11 @@ body {
 button {
   cursor: pointer;
   text-decoration: none;
+  display: inline-flex;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  /*white-space: nowrap;*/
 }
 
 h1,

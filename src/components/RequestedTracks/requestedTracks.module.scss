@@ -1,12 +1,16 @@
-.tracksHeader {
+.requestedTracks {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   padding-bottom: 10vh;
 
-  h1 {
-    padding: 5vh 0;
+  .tracklist {
+    padding-bottom: 7vh;
   }
+
+  .buttons {
+
+  }
+
 }

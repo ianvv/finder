@@ -3,11 +3,13 @@ import { BsFillPersonFill } from "react-icons/bs";
 import s from "./trackDescription.module.scss";
 
 interface ITrackDescriptionProps {
-  track_name: string;
-  artist_name: string;
-  genre: string;
-  album_name: string;
+  track_name: string | boolean;
+  artist_name: string | boolean;
+  genre: string | boolean;
+  album_name: string | boolean;
 }
+
+export const noInfo = ' No information yet'
 
 const TrackDescription: React.FC<ITrackDescriptionProps> = ({
   track_name,
@@ -24,16 +26,16 @@ const TrackDescription: React.FC<ITrackDescriptionProps> = ({
           className={s.albumCover}
         />
         <div className={s.trackInfo}>
-          <div className={s.trackTitle}>{track_name}</div>
+          <div className={s.trackTitle}>{track_name !== false ? track_name : `Song: ${noInfo}` }</div>
           <div className={s.trackArtist}>
             <BsFillPersonFill />
-            {artist_name}
+            <span>{ artist_name !== false ? artist_name : `Artist: ${noInfo}`}</span>
           </div>
           <div className={s.trackAlbum}>
-            Album name: <span>{album_name}</span>
+            Album name: <span>{album_name !== false ? album_name : noInfo}</span>
           </div>
           <div className={s.genre}>
-            Genre: <span>{genre}</span>
+            Genre: <span>{genre !== false ? genre : noInfo}</span>
           </div>
         </div>
       </div>
