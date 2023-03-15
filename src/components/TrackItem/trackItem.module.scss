@@ -1,7 +1,7 @@
 .article {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  //justify-content: space-between;
   border-bottom: 1px solid #ddd;
   gap: 7vw;
   padding: 3vh 3vw;
@@ -21,10 +21,17 @@
   border-radius: 5px;
 }
 
+.rating {
+  white-space: nowrap;
+  max-width: 5vw;
+  padding-left: 2vh;
+}
+
 .articleDetails {
   display: flex;
   flex-direction: column;
   max-width: 55vw;
+  flex-grow: 1;
 }
 
 .trackName {

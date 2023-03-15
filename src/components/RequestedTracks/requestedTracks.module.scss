@@ -1,16 +1,22 @@
 .requestedTracks {
   display: flex;
+  height: 60vh;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding-bottom: 10vh;
 
   .tracklist {
     padding-bottom: 7vh;
+
   }
 
-  .buttons {
+  .buttonsWrapper {
+    height: 10vh;
 
+    .buttons {
+      padding-bottom: 5vh;
+    }
   }
 
 }

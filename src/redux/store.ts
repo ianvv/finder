@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
-import chartTrack from "./slices/chartTrackSlice";
+import chartTracks from "./slices/chartTrackSlice";
 import trackLyrics from "./slices/trackLyricsSlice";
-import searchTrack from "./slices/searchTrackSlice";
+import searchedTracks from "./slices/searchTrackSlice";
 
 export const store = configureStore({
   reducer: {
-    chartTrack,
+    chartTracks,
     trackLyrics,
-    searchTrack
+    searchedTracks
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

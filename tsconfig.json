@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "types": [
+      "styled-components"
+    ],
     "lib": ["dom", "dom.iterable", "esnext", "es6"],
     "allowJs": true,
     "skipLibCheck": true,

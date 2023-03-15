@@ -1,63 +1,108 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import {
-    apikey,
-    BASIC_URL,
-    EStatus,
-    ITrackItemFromArray,
+  apikey,
+  BASIC_URL,
+  EStatus,
+  ISearchRequest,
+  ITrackItemFromArray,
 } from "../commonDeclaration";
-import {RootState} from "../store";
+import { RootState } from "../store";
 
-export const fetchSearchedTrack = createAsyncThunk<ITrackItemFromArray[],
-    string>("navbar/fetchSearchedTrack", async (trackTitle) => {
-    let {data} = await axios.get(
-        `${BASIC_URL}track.search?q_track=${trackTitle}&page_size=10&page=1&s_track_rating=desc${apikey}`
-    );
-    return data.message.body.track_list;
-});
-
-interface ISearchTrackSliceState {
-    tracklist: ITrackItemFromArray[];
-    status: EStatus;
-    searchValue: string;
-}
-
-const initialState: ISearchTrackSliceState = {
-    tracklist: [] as ITrackItemFromArray[],
-    status: EStatus.LOADING,
-    searchValue: '',
+type TFetchSearchedTracksParams = {
+  searchValue: string;
+  page: number;
 };
 
-const chartTrackSlice = createSlice({
-    name: "music",
-    initialState,
-    reducers: {
-        setSearchValue(state, action: PayloadAction<string>) {
-            state.searchValue = action.payload;
-        },
-    },
-    extraReducers: (builder) => {
-        builder.addCase(fetchSearchedTrack.pending, (state) => {
-            state.status = EStatus.LOADING;
-            state.tracklist = [];
-        });
+export const fetchSearchedTracks = createAsyncThunk<
+  ISearchRequest,
+  TFetchSearchedTracksParams
+>("navbar/fetchSearchedTrack", async (params) => {
+  const { searchValue, page } = params;
 
-        builder.addCase(fetchSearchedTrack.fulfilled, (state, action) => {
-            state.tracklist = action.payload;
-            state.status = EStatus.SUCCESS;
-        });
-
-        builder.addCase(fetchSearchedTrack.rejected, (state) => {
-            console.log("ERROR in chartTrackSlice, 87 row");
-            state.status = EStatus.ERROR;
-            state.tracklist = [];
-        });
-    },
+  let { data } = await axios.get(
+    `${BASIC_URL}track.search?q_track=${searchValue}&page_size=10&page=${page}&s_track_rating=desc${apikey}`
+  );
+  // console.log(data);
+  console.log(data.message);
+  return data.message;
+  // return data.message.body.track_list;
 });
 
-export const searchTrackSelector = (state: RootState) => state.searchTrack;
+interface ISearchedTracksSliceState {
+  tracklist: ITrackItemFromArray[];
+  status: EStatus;
+  searchValue: string;
+  page: number;
+  totalItems: number;
+}
 
-export const {setSearchValue} =
-    chartTrackSlice.actions;
+const initialState: ISearchedTracksSliceState = {
+  tracklist: [] as ITrackItemFromArray[],
+  // tracklist: [],
+  totalItems: 0,
+  status: EStatus.LOADING,
+  searchValue: "",
+  page: 1,
+};
 
-export default chartTrackSlice.reducer;
+const searchedTracksSlice = createSlice({
+  name: "search",
+  initialState,
+  reducers: {
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
+    },
+    setPage(state) {
+      state.page = state.page + 1;
+    },
+    setFirstPage(state) {
+      state.page = 1;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchSearchedTracks.pending, (state) => {
+      state.status = EStatus.LOADING;
+      state.tracklist = [];
+    });
+
+    builder.addCase(fetchSearchedTracks.fulfilled, (state, action) => {
+      let prevArr = state.tracklist;
+      let newArr = action.payload.body.track_list;
+      state.tracklist = [...prevArr, ...newArr];
+      state.totalItems = action.payload.header.available;
+      state.status = EStatus.SUCCESS;
+    });
+
+    builder.addCase(fetchSearchedTracks.rejected, (state) => {
+      console.log("ERROR in chartTrackSlice, 87 row");
+      state.status = EStatus.ERROR;
+      state.tracklist = [];
+    });
+  },
+});
+
+export const searchedTracksSelector = (state: RootState) =>
+  state.searchedTracks;
+
+export const { setSearchValue, setPage, setFirstPage } =
+  searchedTracksSlice.actions;
+
+export default searchedTracksSlice.reducer;
+
+// type TSearchTracksParams = {
+//   searchValue: string;
+//   page: number;
+// };
+
+// export const fetchSearchedTracks = createAsyncThunk<
+//   ITrackItemFromArray[],
+//   TSearchTracksParams
+// >("navbar/fetchSearchedTrack", async (params) => {
+//   const { searchValue, page } = params;
+//
+//   let { data } = await axios.get(
+//     `${BASIC_URL}track.search?q_track=${searchValue}&page_size=10&page=${page}&s_track_rating=desc${apikey}`
+//   );
+//   return data.message.body.track_list;
+// });

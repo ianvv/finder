@@ -13,6 +13,7 @@ const Navbar = () => {
 
     const onClickHandler = () => {
         location.pathname !== '/' && dispatch(setSearchValue(''))
+        dispatch(setSearchValue(''))
     }
 
     return (

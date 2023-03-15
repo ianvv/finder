@@ -37,6 +37,17 @@ export interface ITrackItemFromArray {
   };
 }
 
+export interface ISearchRequest {
+  header: {
+    status_code: number;
+    execute_time: number;
+    available: number;
+  };
+  body: {
+    track_list: ITrackItemFromArray[];
+  };
+}
+
 export interface ISingleTrackItem {
   track_id: number;
   track_name: string;

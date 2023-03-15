@@ -14,22 +14,23 @@ export const fetchChartTracks = createAsyncThunk<ITrackItemFromArray[]>(
     let { data } = await axios.get(
       `${BASIC_URL}chart.tracks.get?chart_name=top&page=1&page_size=10&country=us&f_has_lyrics=1${apikey}`
     );
+    console.log(data);
     return data.message.body.track_list;
   }
 );
 
-interface IChartTrackSliceState {
+interface IChartTracksSliceState {
   tracklist: ITrackItemFromArray[];
   status: EStatus;
 }
 
-const initialState: IChartTrackSliceState = {
+const initialState: IChartTracksSliceState = {
   tracklist: [] as ITrackItemFromArray[],
   status: EStatus.LOADING,
 };
 
-const chartTrackSlice = createSlice({
-  name: "music",
+const chartTracksSlice = createSlice({
+  name: "chartTracks",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -51,6 +52,6 @@ const chartTrackSlice = createSlice({
   },
 });
 
-export const chartTrackSelector = (state: RootState) => state.chartTrack;
+export const chartTracksSelector = (state: RootState) => state.chartTracks;
 
-export default chartTrackSlice.reducer;
+export default chartTracksSlice.reducer;
