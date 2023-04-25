@@ -1,6 +1,6 @@
 export const BASIC_URL = "https://api.musixmatch.com/ws/1.1/";
 
-export const apikey = `&apikey=${process.env.REACT_APP_KEY}`;
+// export const apikey = `&apikey=${process.env.REACT_APP_KEY}`;
 
 export interface ITrackItemFromArray {
   track: {

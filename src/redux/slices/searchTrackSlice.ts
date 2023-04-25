@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import {
-  apikey,
   BASIC_URL,
   EStatus,
   ISearchRequest,
   ITrackItemFromArray,
 } from "../commonDeclaration";
 import { RootState } from "../store";
+
+const apikey = "&apikey=06e166665e01610df031e7711f263f29";
 
 type TFetchSearchedTracksParams = {
   searchValue: string;
@@ -59,11 +60,14 @@ const searchedTracksSlice = createSlice({
     setFirstPage(state) {
       state.page = 1;
     },
+    resetTracklist(state) {
+      state.tracklist = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSearchedTracks.pending, (state) => {
       state.status = EStatus.LOADING;
-      state.tracklist = [];
+      // state.tracklist = [];
     });
 
     builder.addCase(fetchSearchedTracks.fulfilled, (state, action) => {
@@ -85,7 +89,7 @@ const searchedTracksSlice = createSlice({
 export const searchedTracksSelector = (state: RootState) =>
   state.searchedTracks;
 
-export const { setSearchValue, setPage, setFirstPage } =
+export const { setSearchValue, setPage, setFirstPage, resetTracklist } =
   searchedTracksSlice.actions;
 
 export default searchedTracksSlice.reducer;

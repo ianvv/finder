@@ -5,6 +5,7 @@ import s from "./search.module.scss";
 import { useAppDispatch } from "../../redux/store";
 import {
   fetchSearchedTracks,
+  resetTracklist,
   searchedTracksSelector,
   setFirstPage,
   setPage,
@@ -25,6 +26,7 @@ const Search: React.FC = () => {
 
   const searchResultHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    dispatch(resetTracklist());
     dispatch(setFirstPage());
     navigate(`/search/tracks/${searchValue}`);
     location.pathname.split("/")[1] === "search" &&

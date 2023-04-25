@@ -23,8 +23,6 @@ const SearchedTracksPage: React.FC = () => {
   const codedPathname = location.pathname.split("/")[3].split("%20").join(" ");
   const decodedPathname = decodeURIComponent(codedPathname);
 
-  console.log(decodeURIComponent("какfasfas"));
-
   useEffect(() => {
     dispatch(fetchSearchedTracks({ searchValue, page }));
     dispatch(setSearchValue(decodedPathname));
@@ -50,6 +48,7 @@ const SearchedTracksPage: React.FC = () => {
     <RequestedTracks
       status={status}
       title={`Searched tracks  ( ${totalItems} items )`}
+      totalItems={totalItems}
       tracklist={tracklist}
     />
   );
